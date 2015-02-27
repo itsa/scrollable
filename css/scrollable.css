@@ -1,0 +1,60 @@
+[plugin-scroll="true"] {
+    overflow: hidden !important;
+}
+
+[plugin-scroll="true"] >span.itsa-vscroll-cont,
+[plugin-scroll="true"] >span.itsa-hscroll-cont {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    position: absolute;
+    display: block;
+    left: -9999px;
+    top: -9999px;
+    opacity: 0;
+}
+
+[plugin-scroll="true"]:not(.disabled) >span.itsa-vscroll-cont.itsa-visible {
+    opacity: 1;
+    width: 0.8em;
+    height: 100%;
+    right: 0;
+    top: 0;
+    left: auto;
+}
+
+[plugin-scroll="true"]:not(.disabled) >span.itsa-hscroll-cont.itsa-visible {
+    opacity: 1;
+    height: 0.8em;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    top: auto;
+}
+
+[plugin-scroll="true"] >span.itsa-vscroll-cont span {
+    position: relative;
+    display: block;
+    width: 100%;
+    min-height: 0.5em;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 0.3em;
+}
+
+[plugin-scroll="true"] >span.itsa-hscroll-cont span {
+    position: relative;
+    display: block;
+    height: 100%;
+    min-width: 0.5em;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 0.3em;
+}
+
+[plugin-scroll="true"][scroll-light="true"] >span.itsa-vscroll-cont span,
+[plugin-scroll="true"][scroll-light="true"] >span.itsa-hscroll-cont span {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+[plugin-scroll="true"] >span span.dd-dragging {
+    cursor: default;
+}
