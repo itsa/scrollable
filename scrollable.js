@@ -28,7 +28,7 @@ var NAME = '[scrollable]: ',
 module.exports = function (window) {
 
     var DOCUMENT = window.document,
-        laterSilent = require('utils').laterSilent,
+        later = require('utils').later,
         Scrollable, Event, setupEvents, DD, isSafari;
 
     window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', createHashMap());
@@ -94,7 +94,7 @@ module.exports = function (window) {
             // because we cannot predict if the size of the container are goiig to change (fe by ancestor-classes)
             // we need to sync by timer as well:
             var instance = this;
-            instance._syncTimer = laterSilent(instance.sync.bind(instance), SYNC_TIMER);
+            instance._syncTimer = later(instance.sync.bind(instance), SYNC_TIMER);
         }, {
         attrs: {
             x: 'boolean',
