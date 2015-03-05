@@ -36,6 +36,7 @@
         "drag": "itsa/drag",
         "js-ext": "itsa/js-ext",
         "utils": "itsa/utils",
+        "useragent": "itsa/useragent",
         "node-plugin": "itsa/node-plugin",
         "drag": "itsa/drag",
         "vdom": "itsa/vdom"
