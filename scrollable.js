@@ -29,7 +29,7 @@ module.exports = function (window) {
 
     var DOCUMENT = window.document,
         laterSilent = require('utils').laterSilent,
-        Scrollable, Event, setupEvents, DD;
+        Scrollable, Event, setupEvents, DD, isSafari;
 
     window._ITSAmodules || Object.protectedProp(window, '_ITSAmodules', createHashMap());
 
@@ -45,6 +45,8 @@ module.exports = function (window) {
     Event = require('event-mobile')(window);
     DD = require('drag')(window);
     DD.init(); // ITSA combines the Drag-module with drag-drop into ITSA.DD
+
+    isSafari = require('useragent')(window).isSafari;
 
     setupEvents = function() {
         Event.after('UI:dd-drag', function(e) {
@@ -136,12 +138,21 @@ module.exports = function (window) {
                 width = host.width,
                 scrollLeft = model.left,
                 scrollTop = model.top,
-                vScrollerVisible = (scrollHeight>height),
-                hScrollerVisible = (scrollWidth>width),
                 vscroller = host.getElement('span.itsa-vscroll-cont', true),
                 hscroller = host.getElement('span.itsa-hscroll-cont', true),
-                sizeHandle, effectiveRegion, maxScrollAmount, scrollAmount, handleNode;
+                sizeHandle, effectiveRegion, maxScrollAmount, scrollAmount, handleNode,
+                vScrollerVisible, hScrollerVisible;
 
+            // safari showed it miscalculates scrollWidth (perhaps also scrollHeight)
+            // in certain circumstances by returning 1px too much
+            // this may lead into a scroller when it shouldn;t be there:
+            if (isSafari) {
+                (scrollHeight===(height+1)) && (scrollHeight=height);
+                (scrollWidth===(width+1)) && (scrollWidth=width);
+            }
+
+            vScrollerVisible = (scrollHeight>height),
+            hScrollerVisible = (scrollWidth>width),
             vscroller.toggleClass('itsa-visible', vScrollerVisible);
             hscroller.toggleClass('itsa-visible', hScrollerVisible);
 
