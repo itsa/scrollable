@@ -8,7 +8,7 @@
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     position: absolute;
-    display: block;
+    /*display: block;*/
     left: -9999px;
     top: -9999px;
     opacity: 0;
@@ -34,7 +34,7 @@
 
 [plugin-scroll="true"] >span.itsa-vscroll-cont span {
     position: relative;
-    display: block;
+    /*display: block;*/
     width: 100%;
     min-height: 0.5em;
     background-color: rgba(0, 0, 0, 0.5);
@@ -43,7 +43,7 @@
 
 [plugin-scroll="true"] >span.itsa-hscroll-cont span {
     position: relative;
-    display: block;
+    /*display: block;*/
     height: 100%;
     min-width: 0.5em;
     background-color: rgba(0, 0, 0, 0.5);
