@@ -1,20 +1,21 @@
-"use strict";
-
-require('js-ext/lib/object.js');
-require('polyfill');
-require('./css/scrollable.css');
-
 /**
- *
+ * Plugin to create scrollable divs
  *
  *
  * <i>Copyright (c) 2014 ITSA - https://github.com/itsa</i>
  * New BSD License - http://choosealicense.com/licenses/bsd-3-clause/
  *
- * @module focusmanager
- * @class FocusManager
+ *
+ * @module scrollable
+ * @class Scrollable
  * @since 0.0.1
 */
+
+"use strict";
+
+require('js-ext/lib/object.js');
+require('polyfill');
+require('./css/scrollable.css');
 
 var NAME = '[scrollable]: ',
     POSITION = 'position',
