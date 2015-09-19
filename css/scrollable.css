@@ -12,6 +12,7 @@
     left: -9999px;
     top: -9999px;
     opacity: 0;
+    z-index: 899;
 }
 
 [plugin-scroll="true"]:not(.disabled) >span.itsa-vscroll-cont.itsa-visible {
