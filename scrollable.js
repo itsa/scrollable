@@ -169,7 +169,7 @@ module.exports = function (window) {
             if (vScrollerVisible) {
                 handleNode = vscroller.getElement('span');
                 if (!handleNode.hasClass('dd-dragging')) {
-                    sizeHandle = Math.round(height*(height/scrollHeight));
+                    sizeHandle = instance.getVScrollerSize(height, scrollHeight);
                     effectiveRegion = height - sizeHandle;
                     maxScrollAmount = scrollHeight - height;
                     scrollAmount = effectiveRegion * Math.max(0, Math.min(1, (scrollTop/maxScrollAmount)));
@@ -182,7 +182,7 @@ module.exports = function (window) {
             if (hScrollerVisible) {
                 handleNode = hscroller.getElement('span');
                 if (!handleNode.hasClass('dd-dragging')) {
-                    sizeHandle = Math.round(width*(width/scrollWidth));
+                    sizeHandle = instance.getHScrollerWidth(width, scrollWidth);
                     effectiveRegion = width - sizeHandle;
                     maxScrollAmount = scrollWidth - width;
                     scrollAmount = effectiveRegion * Math.max(0, Math.min(1, (scrollLeft/maxScrollAmount)));
@@ -192,6 +192,12 @@ module.exports = function (window) {
                 hscroller.setInlineStyle('bottom', -scrollTop+'px')
                          .setInlineStyle('left', scrollLeft+'px');
             }
+        },
+        getHScrollerWidth: function(width, scrollWidth) {
+            return Math.round(width*(width/scrollWidth));
+        },
+        getVScrollerSize: function(height, scrollHeight) {
+            return Math.round(height*(height/scrollHeight));
         },
         destroy: function() {
             var instance = this,
