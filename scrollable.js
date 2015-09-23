@@ -133,16 +133,15 @@ module.exports = function (window) {
             var instance = this,
                 host = instance.host,
                 model = instance.model,
-                scrollHeight = host.scrollHeight,
-                scrollWidth = host.scrollWidth,
+                scrollHeight = instance.getVScrollArea(),
+                scrollWidth = instance.getHScrollArea(),
                 height = host.height,
                 width = host.width,
                 scrollLeft = model.left,
                 scrollTop = model.top,
                 vscroller = host.getElement('span.itsa-vscroll-cont', true),
                 hscroller = host.getElement('span.itsa-hscroll-cont', true),
-                sizeHandle, effectiveRegion, maxScrollAmount, scrollAmount, handleNode,
-                vScrollerVisible, hScrollerVisible;
+                handleNode, vScrollerVisible, hScrollerVisible;
 
             // safari showed it miscalculates scrollWidth (perhaps also scrollHeight)
             // in certain circumstances by returning 1px too much
@@ -169,12 +168,7 @@ module.exports = function (window) {
             if (vScrollerVisible) {
                 handleNode = vscroller.getElement('span');
                 if (!handleNode.hasClass('dd-dragging')) {
-                    sizeHandle = instance.getVScrollerSize(height, scrollHeight);
-                    effectiveRegion = height - sizeHandle;
-                    maxScrollAmount = scrollHeight - height;
-                    scrollAmount = effectiveRegion * Math.max(0, Math.min(1, (scrollTop/maxScrollAmount)));
-                    handleNode.setInlineStyle('top', scrollAmount+'px')
-                              .setInlineStyle('height', sizeHandle+'px');
+                    instance.setVerticalHandle(handleNode, height, scrollHeight);
                 }
                 vscroller.setInlineStyle('top', scrollTop+'px')
                          .setInlineStyle('right', -scrollLeft+'px');
@@ -182,22 +176,39 @@ module.exports = function (window) {
             if (hScrollerVisible) {
                 handleNode = hscroller.getElement('span');
                 if (!handleNode.hasClass('dd-dragging')) {
-                    sizeHandle = instance.getHScrollerWidth(width, scrollWidth);
-                    effectiveRegion = width - sizeHandle;
-                    maxScrollAmount = scrollWidth - width;
-                    scrollAmount = effectiveRegion * Math.max(0, Math.min(1, (scrollLeft/maxScrollAmount)));
-                    handleNode.setInlineStyle('left', scrollAmount+'px')
-                              .setInlineStyle('width', sizeHandle+'px');
+                    instance.setHorizontalHandle(handleNode, width, scrollWidth);
                 }
                 hscroller.setInlineStyle('bottom', -scrollTop+'px')
                          .setInlineStyle('left', scrollLeft+'px');
             }
         },
-        getHScrollerWidth: function(width, scrollWidth) {
-            return Math.round(width*(width/scrollWidth));
+        setVerticalHandle: function(handleNode, height, scrollHeight) {
+            var instance = this,
+                model = instance.model,
+                scrollTop = model.top,
+                sizeHandle = Math.round(height*(height/scrollHeight)),
+                effectiveRegion = height - sizeHandle,
+                maxScrollAmount = scrollHeight - height,
+                scrollAmount = effectiveRegion * Math.max(0, Math.min(1, (scrollTop/maxScrollAmount)));
+            handleNode.setInlineStyle('top', scrollAmount+'px')
+                      .setInlineStyle('height', sizeHandle+'px');
         },
-        getVScrollerSize: function(height, scrollHeight) {
-            return Math.round(height*(height/scrollHeight));
+        setHorizontalHandle: function(handleNode, width, scrollWidth) {
+            var instance = this,
+                model = instance.model,
+                scrollLeft = model.left,
+                sizeHandle = Math.round(width*(width/scrollWidth)),
+                effectiveRegion = width - sizeHandle,
+                maxScrollAmount = scrollWidth - width,
+                scrollAmount = effectiveRegion * Math.max(0, Math.min(1, (scrollLeft/maxScrollAmount)));
+            handleNode.setInlineStyle('left', scrollAmount+'px')
+                      .setInlineStyle('width', sizeHandle+'px');
+        },
+        getHScrollArea: function() {
+            return this.host.scrollWidth;
+        },
+        getVScrollArea: function() {
+            return this.host.scrollHeight;
         },
         destroy: function() {
             var instance = this,
